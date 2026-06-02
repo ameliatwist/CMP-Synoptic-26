@@ -10,6 +10,8 @@ app.set('views', path.join(__dirname, '/views'));
 
 app.use('/static', express.static(path.join(__dirname, 'public')));
 
+dbJobs = require("./jobs/data")
+
 app.use(
   session({
     secret: 'wise elephant',
@@ -21,6 +23,7 @@ app.use(
         path: match ? '/' + match[1] : '/',
         httpOnly: true,
         secure: req.secure || false,
+        // cookie expires after 7 days
         maxAge: 1000 * 60 * 60 * 24 * 7
       };
     },
