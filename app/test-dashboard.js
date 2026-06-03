@@ -7,8 +7,12 @@ app.set("views", "./views");
 
 app.use(express.static("public"));
 
+app.get("/report", (req, res) => {
+    res.render("reportBin");
+});
+
 app.get("/", (req, res) => {
-  res.render("dashboardC", {
+  res.render("dashboard", {
     userName: "Amelia",
     points: 320,
     reports: [

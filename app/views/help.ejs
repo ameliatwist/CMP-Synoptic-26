@@ -14,7 +14,7 @@
 <nav class="sidebar">
     <ul>
         <li><a href="/">🏠 Dashboard</a></li>
-        <li><a href="/reportBin">🗑 Report Bin</a></li>
+        <li><a href="/report">🗑 Report Bin</a></li>
         <li><a href="/rota">📅 Rota</a></li>
         <li><a href="/rewards">🎁 Rewards</a></li>
         <li><a href="/learn">♻ Learn</a></li>
@@ -41,52 +41,7 @@
     </div>
 </header>
 
-<main class="dashboard">
-
-    <aside class="points-card">
-        <p>Good morning,<br><%= userName %></p>
-
-        <div class="star">★</div>
-
-        <h3>Current points</h3>
-        <p class="points"><%= points %></p>
-    </aside>
-
-    <section class="actions">
-
-        <a href="/report" class="action-card">
-            <span>🗑️</span>
-            <p>Report waste bin</p>
-        </a>
-
-        <a href="/rota" class="action-card">
-            <span>📅</span>
-            <p>Collection rota</p>
-        </a>
-
-        <a href="/rewards" class="action-card">
-            <span>🎁</span>
-            <p>Rewards</p>
-        </a>
-
-        <a href="/learn" class="action-card">
-            <span>♻️</span>
-            <p>Learn</p>
-        </a>
-
-    </section>
-
-    <aside class="reports">
-        <h2>Recent reports</h2>
-
-        <% reports.forEach(report => { %>
-            <div class="report-item">
-                <strong><%= report.type %></strong>
-                <p><%= report.location %></p>
-                <small><%= report.status %></small>
-            </div>
-        <% }) %>
-    </aside>
+<main>
 
 </main>
 

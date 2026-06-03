@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Report Waste Bin</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<link rel="stylesheet" href="/styles/dashboard.css">
+
+</head>
+
+<body>
+<nav class="sidebar">
+    <ul>
+        <li><a href="/">🏠 Dashboard</a></li>
+        <li><a href="/reportBin">🗑 Report Bin</a></li>
+        <li><a href="/rota">📅 Rota</a></li>
+        <li><a href="/rewards">🎁 Rewards</a></li>
+        <li><a href="/learn">♻ Learn</a></li>
+        <li><a href="/help">❓ Help</a></li>
+        <li><a href="/profile">👤 Profile</a></li>
+    </ul>
+</nav>
+<header class="topbar">
+    <div class="logo">♻️</div>
+
+    <h1>WasteApp</h1>
+
+    <div class="header-actions">
+        <a href="/help" class="help-btn">
+            <i class="fa-solid fa-circle-question"></i>
+        </a>
+
+        <a href="/profile" class="profile-btn">
+            <i class="fa-solid fa-user"></i>
+        </a>
+
+        <button class="burger-btn">☰</button>
+    </div>
+</header>
+
+<main class="report-page">
+
+
+<section class="bin-section">
+
+    <h2>Select Bin Fullness</h2>
+
+    <div class="bin-wrapper">
+
+        <div class="bin">
+            <div class="bin-fill" id="binFill"></div>
+        </div>
+
+    </div>
+
+    <input
+        type="range"
+        id="fullness"
+        min="0"
+        max="100"
+        value="50">
+
+    <p class="fullness-text">
+        Fullness:
+        <span id="fullnessValue">50%</span>
+    </p>
+
+</section>
+
+
+<section class="form-section">
+
+    <h2>Report a Waste Bin</h2>
+
+    <form action="/report" method="POST" enctype="multipart/form-data">
+
+        <label for="address">
+            Bin Address
+        </label>
+
+        <input
+            type="text"
+            id="address"
+            name="address"
+            placeholder="Enter bin location"
+            required>
+
+        <label for="issue">
+            Issue Type
+        </label>
+
+        <select
+            id="issue"
+            name="issue"
+            required>
+
+            <option value="">
+                Select an issue
+            </option>
+
+            <option value="Overflowing Bin">
+                Overflowing Bin
+            </option>
+
+            <option value="Damaged Bin">
+                Damaged Bin
+            </option>
+
+            <option value="Missed Collection">
+                Missed Collection
+            </option>
+
+            <option value="Fly Tipping">
+                Fly Tipping
+            </option>
+
+        </select>
+
+        <label for="description">
+            Extra Details
+        </label>
+
+        <textarea
+            id="description"
+            name="description"
+            rows="5"
+            placeholder="Add any extra details...">
+        </textarea>
+
+        <label for="picture">
+            Upload Picture
+        </label>
+
+        <input
+            type="file"
+            id="picture"
+            name="picture"
+            accept="image/*">
+
+        <input
+            type="hidden"
+            id="fullnessInput"
+            name="fullness"
+            value="50">
+
+        <button
+            type="submit"
+            class="submit-btn">
+
+            Submit Report
+
+        </button>
+
+    </form>
+
+</section>
+
+</main>
+
+<script>
+
+const fullness =
+document.getElementById("fullness");
+
+const binFill =
+document.getElementById("binFill");
+
+const fullnessValue =
+document.getElementById("fullnessValue");
+
+const fullnessInput =
+document.getElementById("fullnessInput");
+
+fullness.addEventListener("input", () => {
+
+    const value = fullness.value;
+
+    binFill.style.height =
+    value + "%";
+
+    fullnessValue.textContent =
+    value + "%";
+
+    fullnessInput.value =
+    value;
+
+});
+
+</script>
+
+<footer class="footer">
+    <div class="footer-content">
+
+        <div class="footer-section">
+            <h3>WasteApp</h3>
+            <p>Helping communities keep their environment clean.</p>
+        </div>
+
+        <div class="footer-section">
+            <h3>Contact Us</h3>
+            <p>For any queries contact us:</p>
+
+            <div class="socials">
+                <a href="https://facebook.com" target="_blank">
+                    <i class="fa-brands fa-facebook fa-2x"></i>
+                </a>
+
+                <a href="https://twitter.com" target="_blank">
+                    <i class="fa-brands fa-x-twitter fa-2x"></i>
+                </a>
+
+                <a href="https://instagram.com" target="_blank">
+                    <i class="fa-brands fa-instagram fa-2x"></i>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        &copy; 2026 WasteApp. All Rights Reserved.
+    </div>
+</footer>
+
+<script src="/js/burger.js"></script>
+</body>
+</html>
