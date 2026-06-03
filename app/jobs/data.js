@@ -1,10 +1,11 @@
 const db = require("../db")
 const bcrypt = require("bcrypt");
+const Queue = require("better-queue");
 saltRounds = 10
 
 
 const TYPE_LOGIN_USER = "LOGIN_USER";
-const loginUser = async function (params) {
+const loginUser = async function (input) {
     if (input.login == null || input.password == null) {
         return { err: "incomplete input", result: null };
     }
