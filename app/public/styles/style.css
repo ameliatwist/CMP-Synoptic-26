@@ -1,0 +1,655 @@
+/*HOME PAGE*/
+/* GENERAL */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0b0f14; /* black base */
+    color: white;
+}
+
+/* HEADER */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background: #0f1a24;
+    border-bottom: 2px solid #1e3a5f;
+}
+
+.logo {
+     font-size: 22px;
+    text-decoration: none;
+    font-weight: bold;
+    color: #2ecc71;  /* green */
+}
+
+nav a {
+    margin: 0 10px;
+    color: #bbb;
+    text-decoration: none;
+}
+
+nav a:hover {
+    color: #2ecc71;
+}
+
+.login-btn {
+    background: #3498db; /* blue */
+    border: none;
+    padding: 8px 15px;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* HERO */
+.hero {
+    text-align: center;
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #0f1a24, #0b0f14);
+}
+
+.hero h1 {
+    font-size: 40px;
+    color: #2ecc71;
+}
+
+.hero p {
+    color: #ccc;
+    margin-bottom: 20px;
+}
+
+.hero-buttons button {
+    margin: 10px;
+    padding: 12px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.primary {
+    background: #2ecc71;
+    color: black;
+}
+
+.secondary {
+    background: #3498db;
+    color: white;
+}
+
+/* FEATURES */
+.features {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 40px;
+    flex-wrap: wrap;
+}
+
+.card {
+    background: #111b24;
+    padding: 20px;
+    width: 250px;
+    border-radius: 10px;
+    border: 1px solid #1e3a5f;
+}
+
+.card h3 {
+    color: #2ecc71;
+}
+.hero {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 40px;
+    padding: 60px 40px;
+    flex-wrap: wrap;
+}
+
+.about-card,
+.reward-card {
+    background: #111b24;
+    border: 1px solid #1e3a5f;
+    border-radius: 12px;
+    padding: 30px;
+}
+
+.about-card {
+    width: 550px;
+}
+
+.about-card h2 {
+    color: #2ecc71;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.about-card p {
+    color: #ccc;
+    line-height: 1.7;
+}
+
+.reward-card {
+    width: 300px;
+    text-align: center;
+}
+
+.bin-icon {
+    font-size: 100px;
+    margin-bottom: 15px;
+}
+
+.reward-card h2 {
+    color: #3498db;
+}
+
+.reward-card p {
+    color: #ccc;
+    margin-bottom: 25px;
+}
+
+.reward-card button {
+    background: #2ecc71;
+    color: black;
+    font-weight: bold;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+
+
+.action-buttons {
+    text-align: center;
+    padding-bottom: 50px;
+}
+
+.action-buttons button {
+    margin: 10px;
+    padding: 14px 25px;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+
+.risk-card{
+    background:#111b24;
+    padding:15px;
+    margin-bottom:10px;
+    border-radius:8px;
+}
+
+.high{
+    border-left:5px solid red;
+}
+
+.medium{
+    border-left:5px solid orange;
+}
+
+.low{
+    border-left:5px solid yellow;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 15px;
+    background: #0f1a24;
+    color: #888;
+}
+
+/*LOGIN PAGE*/
+/* GENERAL */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0b0f14;
+    color: white;
+}
+
+/* HEADER */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 30px;
+    background: #0f1a24;
+    border-bottom: 2px solid #1e3a5f;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.recycle {
+    color: #2ecc71;
+    margin-right: 5px;
+}
+
+.blue {
+    color: #3498db;
+}
+
+.staff-login {
+    color: #3498db;
+    text-decoration: none;
+    border: 1px solid #3498db;
+    padding: 6px 12px;
+    border-radius: 5px;
+}
+
+.staff-login:hover {
+    background: #3498db;
+    color: black;
+}
+
+/* HERO */
+.hero {
+    text-align: center;
+    padding: 60px 20px 30px;
+}
+
+.hero h1 {
+    font-size: 38px;
+    color: #2ecc71;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    color: #bbb;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* SIGNUP */
+.signup-container {
+    display: flex;
+    justify-content: center;
+    padding: 30px 20px;
+}
+
+.signup-card {
+    background: #111b24;
+    padding: 30px;
+    width: 350px;
+    border-radius: 12px;
+    border: 1px solid #1e3a5f;
+}
+
+.signup-card h2 {
+    text-align: center;
+    color: #2ecc71;
+    margin-bottom: 20px;
+}
+
+.signup-card form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 10px;
+    font-size: 13px;
+    color: #ccc;
+}
+
+input {
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 6px;
+    border: none;
+    background: #0b0f14;
+    color: white;
+    border: 1px solid #1e3a5f;
+}
+
+input:focus {
+    outline: none;
+    border-color: #2ecc71;
+}
+
+/* BUTTON */
+button {
+    margin-top: 20px;
+    padding: 10px;
+    background: #2ecc71;
+    border: none;
+    color: black;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #27ae60;
+}
+
+/* LOGIN TEXT */
+.login-text {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 13px;
+    color: #bbb;
+}
+
+.login-text a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+/* FEATURES */
+.features {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 40px 20px;
+    flex-wrap: wrap;
+}
+
+.feature-card {
+    background: #111b24;
+    width: 250px;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #1e3a5f;
+    text-align: center;
+}
+
+.feature-card h3 {
+    color: #2ecc71;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 15px;
+    background: #0f1a24;
+    color: #888;
+    margin-top: 20px;
+}
+
+
+/*DASHBOARD FOR COUNCIL*/
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0b0f14;
+    color: white;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 30px;
+    background: #0f1a24;
+    border-bottom: 2px solid #1e3a5f;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+    color: #2ecc71;
+}
+
+.profile {
+    color: #3498db;
+}
+
+.dashboard-header {
+    text-align: center;
+    padding: 40px;
+}
+
+.dashboard-header h1 {
+    color: #2ecc71;
+}
+
+.dashboard-grid {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.map-card,
+.report-card {
+    background: #111b24;
+    border: 1px solid #1e3a5f;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.map-card {
+    width: 600px;
+}
+
+.report-card {
+    width: 300px;
+}
+.stat-card {
+    background: #111b24;
+    border: 1px solid #1e3a5f;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.map-placeholder {
+    height: 350px;
+    border: 2px dashed #3498db;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #bbb;
+}
+
+.report {
+    background: #0b0f14;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.approve {
+    background: #2ecc71;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.reject {
+    background: #e74c3c;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+footer {
+    text-align: center;
+    padding: 15px;
+    background: #0f1a24;
+    margin-top: 30px;
+}
+
+
+
+/*COUNCIL ROUTE*/
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0b0f14;
+    color: white;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 18px 30px;
+    background: #0f1a24;
+    border-bottom: 2px solid #1e3a5f;
+}
+
+.logo {
+    color: #2ecc71;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.profile {
+    color: #3498db;
+}
+
+.title {
+    text-align: center;
+    padding: 30px;
+}
+
+.title h1 {
+    color: #2ecc71;
+}
+
+.tabs {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.tabs button {
+    margin: 5px;
+    padding: 10px 20px;
+    background: #3498db;
+    border: none;
+    color: white;
+    border-radius: 5px;
+}
+
+.schedule-card,
+.risk-card {
+    background: #111b24;
+    border: 1px solid #1e3a5f;
+    border-radius: 10px;
+    width: 70%;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.schedule-item {
+    background: #0b0f14;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+ul li {
+    margin-bottom: 10px;
+}
+/* Rewards Page */
+
+.points-section {
+    text-align: center;
+    padding: 40px;
+}
+
+.points-card {
+    background: #111b24;
+    border: 1px solid #1e3a5f;
+    border-radius: 12px;
+    padding: 25px;
+    width: 500px;
+    margin: auto;
+}
+
+.points-card h2 {
+    color: #2ecc71;
+}
+
+.progress-bar {
+    background: #222;
+    height: 20px;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 20px 0;
+}
+
+.progress {
+    width: 62%;
+    height: 100%;
+    background: #2ecc71;
+}
+
+.rewards-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 40px;
+}
+
+.reward-card {
+    background: #111b24;
+    border: 1px solid #1e3a5f;
+    border-radius: 10px;
+    padding: 20px;
+    width: 220px;
+    text-align: center;
+}
+
+.reward-card button {
+    margin-top: 10px;
+}
+
+.achievements {
+    text-align: center;
+    padding: 30px;
+}
+
+.badge-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.badge {
+    background: #111b24;
+    border: 1px solid #1e3a5f;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.impact {
+    text-align: center;
+    padding: 30px;
+}
+
+.impact-card {
+    background: #111b24;
+    border: 1px solid #1e3a5f;
+    border-radius: 12px;
+    width: 500px;
+    margin: auto;
+    padding: 25px;
+}
+
+footer {
+    text-align: center;
+    padding: 15px;
+    background: #0f1a24;
+    margin-top: 30px;
+}

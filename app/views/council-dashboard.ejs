@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Council Dashboard</title>
+<link rel="stylesheet" href="/static/styles/style.css">
+</head>
+
+<body>
+
+<header>
+    <a href="index.html" class="logo">
+        ♻ EcoWaste
+    </a>
+
+    <nav>
+          <a href="index.html">Home</a>
+            <a href="council-dashboard.html" class="active">Dashboard</a>
+            <a href="council-routes.html">Routes and Schedule</a>
+            <a href="rewards.html">Rewards</a>
+        </nav>
+
+    <div class="council-title">
+        Council Staff Portal
+    </div>
+</header>
+
+<main>
+
+    <section class="dashboard-header">
+        <h1>Council Dashboard</h1>
+        <p>Monitor waste reports and identify collection hotspots.</p>
+    </section>
+
+    <section class="dashboard-grid">
+
+        <div class="map-card">
+            <h2>Waste Hotspot Map</h2>
+
+            <div class="map-placeholder">
+                Map Display Area
+            </div>
+        </div>
+
+        <section class="stats-section">
+
+    <h2>Waste Statistics</h2>
+
+    <div class="stats-grid">
+
+        <div class="stat-card">
+            <h3>320</h3>
+            <p>Total Reports</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>275</h3>
+            <p>Approved Reports</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>45</h3>
+            <p>Pending Reports</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>5</h3>
+            <p>High Risk Areas</p>
+        </div>
+
+    </div>
+
+</section>
+
+        <div class="report-card">
+            <h2>Recent Reports</h2>
+
+            <div class="report">
+                Overflowing Bin - City Centre
+            </div>
+
+            <div class="report">
+                Full Bin - Selly Oak
+            </div>
+
+            <div class="report">
+                Overflowing Bin - New Street
+            </div>
+
+            <div class="buttons">
+                <button onclick="approveReport()">Approve</button>
+                <button onclick="rejectReport()">Reject</button>
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    © 2026 EcoWaste | Council Portal
+</footer>
+
+</body>
+</html>

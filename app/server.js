@@ -42,7 +42,18 @@ app.get("/", (req, res) => {
     res.send("response")
 })
 
+function requireLogin(req, res, next) {
+  if (!req.session.user) return res.redirect("/login");
+  next();
+}
 
+app.use("/council-dashboard", require("./routes/council-dashboard"))
+app.use("/council-login", require("./routes/council-login"))
+app.use("/council-routes", require("./routes/council-routes"))
+app.use("/create", require("./routes/create"))
+app.use("/index", require("./routes/index"))
+app.use("/login", require("./routes/login"))
+app.use("/rewards", require("./routes/rewards"))
 
 app.listen(3000, () => {
   console.log('Server running on http://localhost:3000');
