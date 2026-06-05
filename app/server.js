@@ -3,6 +3,7 @@ const app = express();
 const path = require('path');
 
 var session = require('express-session');
+const { glob } = require('fs');
 
 
 app.set('view engine', 'ejs');
@@ -10,7 +11,14 @@ app.set('views', path.join(__dirname, '/views'));
 
 app.use('/static', express.static(path.join(__dirname, 'public')));
 
-dbJobs = require("./jobs/data")
+
+//db jobs or use global.jobs
+// dbJobs = require("./jobs/data")
+
+global.jobs = {
+  data: require("./jobs/data")
+}
+
 
 app.use(
   session({

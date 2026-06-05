@@ -2,6 +2,7 @@ const db = require("../db")
 const bcrypt = require("bcrypt");
 saltRounds = 10
 
+const Queue = require("better-queue");
 
 const TYPE_LOGIN_USER = "LOGIN_USER";
 const loginUser = async function (params) {
@@ -40,7 +41,7 @@ const queue = new Queue(async function (input, cb) {
 
         cb(err, result)
     } catch (error) {
-        cb(String(err), null)
+        cb(String(error), null)
     }
 })
 
