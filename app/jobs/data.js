@@ -3,8 +3,6 @@ const bcrypt = require("bcrypt");
 const Queue = require("better-queue");
 saltRounds = 10
 
-const Queue = require("better-queue");
-
 const TYPE_LOGIN_USER = "LOGIN_USER";
 const loginUser = async function (input) {
     if (input.login == null || input.password == null) {
@@ -59,3 +57,9 @@ const push = (input) => {
         });
     });
 };
+
+
+module.exports = {
+    push,
+    TYPE_LOGIN_USER,
+}

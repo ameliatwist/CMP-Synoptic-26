@@ -17,6 +17,7 @@
   "homepage": "https://github.com/ameliatwist/CMP-Synoptic-26#readme",
   "description": "",
   "dependencies": {
+    "all": "^0.0.0",
     "bcrypt": "^6.0.0",
     "better-queue": "^3.8.12",
     "ejs": "^6.0.1",

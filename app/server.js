@@ -3,8 +3,8 @@ const app = express();
 const path = require('path');
 
 var session = require('express-session');
-const { glob } = require('fs');
 
+app.use(express.json());
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
