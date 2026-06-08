@@ -39,7 +39,7 @@ app.use(
 );
 
 app.get("/", (req, res) => {
-    res.send("response")
+    res.redirect("/login")
 })
 
 function requireLogin(req, res, next) {
