@@ -1,7 +1,8 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>WasteApp Dashboard</title>
+    <title>WasteApp Help</title>
 
     <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -15,7 +16,6 @@
     <ul>
         <li><a href="/">🏠 Dashboard</a></li>
         <li><a href="/report">🗑 Report Bin</a></li>
-        <li><a href="/rota">📅 Rota</a></li>
         <li><a href="/rewards">🎁 Rewards</a></li>
         <li><a href="/learn">♻ Learn</a></li>
         <li><a href="/help">❓ Help</a></li>
@@ -24,27 +24,120 @@
 </nav>
 
 <header class="topbar">
-    <div class="logo">♻️</div>
 
-    <h1>WasteApp</h1>
+    <div class="logo">
+        ♻️
+    </div>
+
+    <h1>Help Centre</h1>
 
     <div class="header-actions">
-        <a href="/help" class="help-btn">
-            <i class="fa-solid fa-circle-question"></i>
+
+        <a href="/" class="profile-btn">
+            <i class="fa-solid fa-house"></i>
         </a>
 
         <a href="/profile" class="profile-btn">
             <i class="fa-solid fa-user"></i>
         </a>
 
-        <button class="burger-btn">☰</button>
+        <button class="burger-btn">
+            ☰
+        </button>
+
     </div>
+
 </header>
 
-<main>
+<main class="help-page">
+
+    <!-- WEBSITE ISSUE FORM -->
+
+    <section class="help-card">
+
+        <h2>Report a Website Issue</h2>
+
+        <form>
+
+            <label for="issueTitle">
+                Issue Title
+            </label>
+
+            <input
+                type="text"
+                id="issueTitle"
+                placeholder="Example: Report page not loading">
+
+            <label for="pageAffected">
+                Page Affected
+            </label>
+
+            <select id="pageAffected">
+                <option>Dashboard</option>
+                <option>Report Bin</option>
+                <option>Rewards</option>
+                <option>Learn</option>
+                <option>Help</option>
+                <option>Other</option>
+            </select>
+
+            <label for="issueDescription">
+                Description
+            </label>
+
+            <textarea
+                id="issueDescription"
+                rows="6"
+                placeholder="Describe the issue here...">
+            </textarea>
+
+            <button
+                type="submit"
+                class="submit-btn">
+
+                Submit Issue
+
+            </button>
+
+        </form>
+
+    </section>
+
+    <!-- ACCESSIBILITY -->
+
+    <section class="help-card">
+
+        <h2>Accessibility Settings</h2>
+
+        <p>
+            Adjust settings to improve readability.
+        </p>
+
+        <div class="toggle-row">
+
+            <span>Large Text</span>
+
+            <label class="switch">
+                <input type="checkbox" id="textToggle">
+                <span class="slider"></span>
+            </label>
+
+        </div>
+
+        <div class="toggle-row">
+
+            <span>Light Mode</span>
+
+            <label class="switch">
+                <input type="checkbox" id="modeToggle">
+                <span class="slider"></span>
+            </label>
+
+        </div>
+
+    </section>
 
 </main>
-
 <footer class="footer">
     <div class="footer-content">
 
@@ -78,8 +171,69 @@
         &copy; 2026 WasteApp. All Rights Reserved.
     </div>
 </footer>
-
 <script src="/js/burger.js"></script>
+<script src="/js/settings.js"></script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const textToggle =
+    document.getElementById("textToggle");
+
+    const modeToggle =
+    document.getElementById("modeToggle");
+
+    const largeTextEnabled =
+    localStorage.getItem("largeText") === "true";
+
+    const lightModeEnabled =
+    localStorage.getItem("lightMode") === "true";
+
+    textToggle.checked = largeTextEnabled;
+    modeToggle.checked = lightModeEnabled;
+
+    document.body.classList.toggle(
+        "large-text",
+        largeTextEnabled
+    );
+
+    document.body.classList.toggle(
+        "light-mode",
+        lightModeEnabled
+    );
+
+    textToggle.addEventListener("change", () => {
+
+        localStorage.setItem(
+            "largeText",
+            textToggle.checked
+        );
+
+        document.body.classList.toggle(
+            "large-text",
+            textToggle.checked
+        );
+
+    });
+
+    modeToggle.addEventListener("change", () => {
+
+        localStorage.setItem(
+            "lightMode",
+            modeToggle.checked
+        );
+
+        document.body.classList.toggle(
+            "light-mode",
+            modeToggle.checked
+        );
+
+    });
+
+});
+
+</script>
 
 </body>
 </html>

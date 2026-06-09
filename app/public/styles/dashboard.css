@@ -9,8 +9,6 @@ body {
     color: white;
 }
 
-/* HEADER */
-
 .topbar {
     height: 90px;
     background: #0f1a24;
@@ -61,8 +59,6 @@ body {
     margin: 0;
 }
 
-/* SIDEBAR */
-
 .sidebar {
     position: fixed;
     top: 90px;
@@ -99,16 +95,12 @@ body {
     color: #2ecc71;
 }
 
-/* DASHBOARD */
-
 .dashboard {
     display: grid;
     grid-template-columns: 1fr 2.2fr 1.2fr;
     min-height: calc(100vh - 90px);
     background: #0b0f14;
 }
-
-/* LEFT SECTION */
 
 .points-card {
     background: #111b24;
@@ -139,8 +131,6 @@ body {
     color: #2ecc71;
 }
 
-/* MIDDLE SECTION */
-
 .actions {
     padding: 60px;
     display: grid;
@@ -156,12 +146,10 @@ body {
     border-radius: 18px;
     text-decoration: none;
     color: white;
-
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
     transition: 0.25s;
 }
 
@@ -179,8 +167,6 @@ body {
     font-size: 1.2rem;
     text-align: center;
 }
-
-/* RIGHT SECTION */
 
 .reports {
     background: #111b24;
@@ -222,7 +208,105 @@ body {
     font-weight: bold;
 }
 
-/* REPORT WASTE BIN PAGE */
+.help-page {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 40px;
+    padding: 40px;
+    background: #0b0f14;
+    min-height: calc(100vh - 90px);
+}
+
+.help-card {
+    background: #111b24;
+    border: 1px solid #1e3a5f;
+    border-radius: 15px;
+    padding: 30px;
+    color: white;
+}
+
+.help-card h2 {
+    color: #2ecc71;
+    margin-top: 0;
+    text-align: center;
+}
+
+.help-card form,
+.form-section form {
+    display: flex;
+    flex-direction: column;
+}
+
+.help-card label,
+.form-section label {
+    margin-top: 15px;
+    margin-bottom: 5px;
+    color: #ccc;
+}
+
+.help-card input,
+.help-card select,
+.help-card textarea,
+.form-section input,
+.form-section select,
+.form-section textarea {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #1e3a5f;
+    background: #0b0f14;
+    color: white;
+    font-size: 1rem;
+}
+
+.toggle-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #0b0f14;
+    border: 1px solid #1e3a5f;
+    border-radius: 12px;
+    padding: 18px;
+    margin-top: 15px;
+}
+
+.switch {
+    position: relative;
+    width: 60px;
+    height: 32px;
+}
+
+.switch input {
+    display: none;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: #444;
+    border-radius: 30px;
+    transition: 0.3s;
+}
+
+.slider::before {
+    content: "";
+    position: absolute;
+    height: 24px;
+    width: 24px;
+    left: 4px;
+    bottom: 4px;
+    background: white;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.switch input:checked + .slider {
+    background: #2ecc71;
+}
+
+.switch input:checked + .slider::before {
+    transform: translateX(28px);
+}
 
 .report-page {
     display: grid;
@@ -248,8 +332,6 @@ body {
     margin-top: 0;
     text-align: center;
 }
-
-/* BIN FULLNESS */
 
 .bin-wrapper {
     display: flex;
@@ -305,38 +387,18 @@ body {
     font-weight: bold;
 }
 
-/* REPORT FORM */
-
-.form-section form {
-    display: flex;
-    flex-direction: column;
-}
-
-.form-section label {
-    margin-top: 15px;
-    margin-bottom: 5px;
-    color: #ccc;
-}
-
-.form-section input,
-.form-section select,
-.form-section textarea {
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #1e3a5f;
-    background: #0b0f14;
-    color: white;
-    font-size: 1rem;
-}
-
 .form-section input:focus,
 .form-section select:focus,
-.form-section textarea:focus {
+.form-section textarea:focus,
+.help-card input:focus,
+.help-card select:focus,
+.help-card textarea:focus {
     outline: none;
     border-color: #2ecc71;
 }
 
-.form-section textarea {
+.form-section textarea,
+.help-card textarea {
     resize: vertical;
 }
 
@@ -359,8 +421,6 @@ body {
 .submit-btn:hover {
     background: #27ae60;
 }
-
-/* FOOTER */
 
 .footer {
     background: #0f1a24;
@@ -405,14 +465,117 @@ body {
     color: #aaa;
 }
 
-/* RESPONSIVE */
+.large-text {
+    font-size: 125%;
+}
+
+.light-mode {
+    background: #f5f5f5;
+    color: black;
+}
+
+.light-mode body,
+.light-mode .dashboard,
+.light-mode .actions,
+.light-mode .help-page,
+.light-mode .report-page {
+    background: white;
+    color: black;
+}
+
+.light-mode .topbar,
+.light-mode .sidebar,
+.light-mode .points-card,
+.light-mode .reports,
+.light-mode .action-card,
+.light-mode .report-item,
+.light-mode .help-card,
+.light-mode .bin-section,
+.light-mode .form-section,
+.light-mode .toggle-row,
+.light-mode .footer {
+    background: white;
+    color: black;
+    border-color: #ddd;
+}
+
+.light-mode .topbar {
+    border-bottom: 4px solid #ddd;
+}
+
+.light-mode .actions {
+    border-left: 4px solid #ddd;
+    border-right: 4px solid #ddd;
+}
+
+.light-mode .sidebar {
+    border-left: 2px solid #ddd;
+}
+
+.light-mode h1,
+.light-mode h2,
+.light-mode h3,
+.light-mode p,
+.light-mode label,
+.light-mode span,
+.light-mode strong,
+.light-mode a,
+.light-mode .help-btn,
+.light-mode .profile-btn,
+.light-mode .burger-btn,
+.light-mode .points-card p:first-child,
+.light-mode .points-card h3,
+.light-mode .points,
+.light-mode .action-card p,
+.light-mode .action-card span,
+.light-mode .report-item strong,
+.light-mode .report-item p {
+    color: black !important;
+}
+
+.light-mode .topbar h1,
+.light-mode .reports h2,
+.light-mode .help-card h2,
+.light-mode .bin-section h2,
+.light-mode .form-section h2,
+.light-mode .footer-section h3,
+.light-mode .star {
+    color: #2ecc71 !important;
+}
+
+.light-mode input,
+.light-mode textarea,
+.light-mode select {
+    background: white;
+    color: black;
+    border: 1px solid #ccc;
+}
+
+.light-mode .report-item small {
+    background: #3498db;
+    color: white !important;
+}
+
+.light-mode .bin {
+    background: white;
+    border-color: black;
+}
+
+.light-mode .bin::before {
+    background: black;
+}
+
+.light-mode .footer-bottom {
+    color: black;
+}
 
 @media (max-width: 1000px) {
     .dashboard {
         grid-template-columns: 1fr;
     }
 
-    .report-page {
+    .report-page,
+    .help-page {
         grid-template-columns: 1fr;
     }
 
