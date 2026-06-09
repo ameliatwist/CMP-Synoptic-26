@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoWaste | Profile & Rewards</title>
+    <script src="/static/js/settings.js"></script><link rel="stylesheet" href="/static/styles/style.css">
+</head>
+<body>
+
+    <header>
+        <a href="/index" class="logo">♻ EcoWaste</a>
+        <nav>
+            <a href="/index">Home</a>
+            <a href="/profile" class="active">Profile</a>
+            <a href="/help">Help</a>
+        </nav>
+        <div class="header-right">
+            <div id="google_translate_element"></div>
+            <a href="/logout" class="staff-login">Logout</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="profile-wrap">
+
+            <% if (flashError) { %>
+            <div class="message-box show error profile-section"><%= flashError %></div>
+            <% } %>
+
+            <!-- Header card -->
+            <div class="profile-header-card profile-section">
+                <div class="profile-avatar">♻</div>
+                <div class="profile-info">
+                    <h2><%= profile.fullname %></h2>
+                    <p>@<%= profile.username %> &nbsp;&middot;&nbsp; <%= profile.email %></p>
+                    <p style="margin-top:3px; color:#888; font-size:13px;">
+                        Member since <%= new Date(profile.created_at).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' }) %>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Stat strip -->
+            <div class="profile-stats profile-section">
+                <div class="profile-stat"><h3><%= profile.points %></h3><p>Points</p></div>
+                <div class="profile-stat"><h3><%= reportStats.total %></h3><p>Reports</p></div>
+                <div class="profile-stat"><h3><%= reportStats.approved %></h3><p>Approved</p></div>
+                <div class="profile-stat"><h3><%= reportStats.collected %></h3><p>Collected</p></div>
+                <div class="profile-stat" style="border-color:<%= profile.points >= 2000 ? '#f1c40f' : profile.points >= 1000 ? '#2ecc71' : '#1e3a5f' %>;">
+                    <h3 style="font-size:15px; padding-top:6px;">
+                        <% if (profile.points >= 2000) { %>Eco Hero
+                        <% } else if (profile.points >= 1000) { %>Green Champion
+                        <% } else { %>Eco Starter<% } %>
+                    </h3>
+                    <p>Level</p>
+                </div>
+            </div>
+
+            <!-- Progress bar -->
+            <div class="card profile-section">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                    <span style="color:#ccc; font-size:13px;">Progress to Eco Hero</span>
+                    <span style="color:#2ecc71; font-size:13px; font-weight:bold;"><%= profile.points %> / 2000</span>
+                </div>
+                <div class="progress-bar" style="margin:0;">
+                    <div class="progress" style="width:<%= Math.min(profile.points / 2000 * 100, 100) %>%;"></div>
+                </div>
+                <p style="color:#888; font-size:12px; margin:5px 0 0;">
+                    <% if (profile.points < 2000) { %><%= 2000 - profile.points %> points to go
+                    <% } else { %>You've reached the top level!<% } %>
+                </p>
+            </div>
+
+            <!-- Redeem rewards -->
+            <div class="card profile-section">
+                <h2 style="color:#2ecc71; margin:0 0 12px;">Redeem Rewards</h2>
+                <div class="rewards-container" style="padding:0; justify-content:flex-start;">
+                    <% const rewardItems = [
+                        { name: 'Replacement Bin', cost: 500,  icon: '🗑️' },
+                        { name: 'Community Plant', cost: 1000, icon: '🌳' },
+                        { name: 'Gift Card',       cost: 1500, icon: '🎁' },
+                        { name: 'Eco Hero Badge',  cost: 2000, icon: '🏅' }
+                    ]; %>
+                    <% rewardItems.forEach(item => { %>
+                    <div class="reward-card">
+                        <h3><%= item.icon %> <%= item.name %></h3>
+                        <p><%= item.cost %> Points</p>
+                        <form method="POST" action="/rewards">
+                            <input type="hidden" name="reward_name" value="<%= item.name %>">
+                            <input type="hidden" name="points_cost" value="<%= item.cost %>">
+                            <button type="submit" <%= profile.points < item.cost ? 'disabled' : '' %>>
+                                <%= profile.points >= item.cost ? 'Redeem' : 'Not enough' %>
+                            </button>
+                        </form>
+                    </div>
+                    <% }) %>
+                </div>
+            </div>
+
+            <!-- Report breakdown + achievements side by side -->
+            <div class="profile-two-col">
+                <div class="card">
+                    <h2 style="color:#2ecc71; margin:0 0 10px;">Report Breakdown</h2>
+                    <div style="display:flex; gap:20px; flex-wrap:wrap;">
+                        <div>
+                            <p style="color:#888; font-size:12px; margin:0 0 5px;">By Type</p>
+                            <p style="color:#ccc; margin:3px 0; font-size:13px;">Household &nbsp;<strong style="color:#fff;"><%= reportStats.household %></strong></p>
+                            <p style="color:#ccc; margin:3px 0; font-size:13px;">Street &nbsp;<strong style="color:#fff;"><%= reportStats.street %></strong></p>
+                            <p style="color:#ccc; margin:3px 0; font-size:13px;">Missed &nbsp;<strong style="color:#fff;"><%= reportStats.missed %></strong></p>
+                        </div>
+                        <div>
+                            <p style="color:#888; font-size:12px; margin:0 0 5px;">By Status</p>
+                            <p style="margin:3px 0;"><span class="status-badge pending">pending</span> &nbsp;<strong><%= reportStats.pending %></strong></p>
+                            <p style="margin:3px 0;"><span class="status-badge approved">approved</span> &nbsp;<strong><%= reportStats.approved %></strong></p>
+                            <p style="margin:3px 0;"><span class="status-badge collected">collected</span> &nbsp;<strong><%= reportStats.collected %></strong></p>
+                            <p style="margin:3px 0;"><span class="status-badge rejected">rejected</span> &nbsp;<strong><%= reportStats.rejected %></strong></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2 style="color:#2ecc71; margin:0 0 10px;">Achievements</h2>
+                    <div class="badge-container" style="justify-content:flex-start;">
+                        <% if (reportStats.total >= 1)    { %><div class="badge">First Report</div><% } %>
+                        <% if (reportStats.total >= 5)    { %><div class="badge">5 Reports</div><% } %>
+                        <% if (reportStats.total >= 10)   { %><div class="badge">10 Reports</div><% } %>
+                        <% if (reportStats.approved >= 5) { %><div class="badge">5 Approved</div><% } %>
+                        <% if (profile.points >= 100)     { %><div class="badge">100 Points</div><% } %>
+                        <% if (profile.points >= 500)     { %><div class="badge">500 Points</div><% } %>
+                        <% if (reportStats.total < 1) { %>
+                        <p style="color:#666; font-size:13px; margin:0;">Submit your first report to earn achievements.</p>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recycling tips -->
+            <div class="card profile-section">
+                <h2 style="color:#2ecc71; margin:0 0 10px;">Recycling Reminders</h2>
+                <div class="tip-grid" style="justify-content:flex-start;">
+                    <div class="tip-tile">♻<small>Recycle</small></div>
+                    <div class="tip-tile">💧<small>Save Water</small></div>
+                    <div class="tip-tile">🌱<small>Compost</small></div>
+                    <div class="tip-tile">🚯<small>No Littering</small></div>
+                    <div class="tip-tile">💡<small>Save Energy</small></div>
+                    <div class="tip-tile">🛍️<small>Reuse Bags</small></div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2026 EcoWaste App | Cleaner Streets. Smarter Collections.</p>
+    </footer>
+
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script>function googleTranslateElementInit() { new google.translate.TranslateElement({ pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE }, 'google_translate_element'); }</script>
+</body>
+</html>

@@ -1,78 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Collection Routes</title>
-<link rel="stylesheet" href="/static/styles/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoWaste | Collection Routes</title>
+    <script src="/static/js/settings.js"></script><link rel="stylesheet" href="/static/styles/style.css">
 </head>
-
 <body>
 
-<header>
-    <a href="index.ejs" class="logo">
-        ♻ EcoWaste
-    </a>
-        <nav>  
-            <a href="index.ejs">Home</a>
-            <a href="council-dashboard.ejs">Dashboard</a>
-            <a href="council-routes.ejs" class="active">Routes and Schedule</a>
-            <a href="rewards.ejs">Rewards</a>
+    <header>
+        <a href="/council-dashboard" class="logo">♻ EcoWaste</a>
+        <nav>
+            <a href="/council-dashboard">Dashboard</a>
+            <a href="/council-routes" class="active">Routes</a>
+            <a href="/council-points">Points</a>
         </nav>
-        </nav>
-        
-    <div class="council-title">
-        Council Staff Portal
-    </div>
-</header>
+        <div class="header-right">
+            <div id="google_translate_element"></div>
+            <a href="/logout" class="staff-login">Logout</a>
+        </div>
+    </header>
 
-<main>
+    <main>
 
-<section class="title">
-    <h1>Collection Routes & Schedule</h1>
-</section>
+        <section class="title">
+            <h1>Collection Routes & Schedule</h1>
+            <p style="color:#bbb; font-size:14px; margin-top:-10px;">Ladywood Ward — Birmingham City Council</p>
+        </section>
 
-<section class="schedule-card">
+        <div class="routes-grid">
 
-    <h2>Week 7 Collection Schedule</h2>
+            <!-- Weekly rota -->
+            <div class="routes-col">
+                <h2 style="color:#2ecc71; padding: 0 4px 10px;">Weekly Rota</h2>
 
-    <div class="schedule-item">
-        Monday - Birmingham City Centre
-    </div>
+                <div class="day-card">
+                    <div class="day-header">
+                        <span class="day-name">Monday</span>
+                        <span class="day-area">North Ladywood</span>
+                    </div>
+                    <div class="day-streets">
+                        <div class="day-street">Icknield Port Road</div>
+                        <div class="day-street">Ruston Street</div>
+                        <div class="day-street">Browning Street</div>
+                        <div class="day-street">St Vincents Street</div>
+                    </div>
+                </div>
 
-    <div class="schedule-item">
-        Tuesday - Selly Oak
-    </div>
+                <div class="day-card">
+                    <div class="day-header">
+                        <span class="day-name">Tuesday</span>
+                        <span class="day-area">Central Ladywood</span>
+                    </div>
+                    <div class="day-streets">
+                        <div class="day-street">Ledsam Street</div>
+                        <div class="day-street">Monument Road</div>
+                        <div class="day-street">Marroway Street</div>
+                        <div class="day-street">Alston Street</div>
+                    </div>
+                </div>
 
-    <div class="schedule-item">
-        Wednesday - Edgbaston
-    </div>
+                <div class="day-card">
+                    <div class="day-header">
+                        <span class="day-name">Wednesday</span>
+                        <span class="day-area">South Ladywood</span>
+                    </div>
+                    <div class="day-streets">
+                        <div class="day-street">Ladywood Middleway</div>
+                        <div class="day-street">Sheepcote Street</div>
+                        <div class="day-street">Grosvenor Street West</div>
+                        <div class="day-street">Ryland Street</div>
+                    </div>
+                </div>
 
-    <div class="schedule-item">
-        Thursday - Harborne
-    </div>
+                <div class="day-card">
+                    <div class="day-header">
+                        <span class="day-name">Thursday</span>
+                        <span class="day-area">West Ladywood</span>
+                    </div>
+                    <div class="day-streets">
+                        <div class="day-street">Hagley Road (Ladywood section)</div>
+                        <div class="day-street">Rotton Park Road</div>
+                        <div class="day-street">Reservoir Road</div>
+                        <div class="day-street">City Road</div>
+                    </div>
+                </div>
 
-</section>
-<div class="risk-card high">
-    🔴 Birmingham City Centre
-    <span>95 reports this week</span>
-</div>
+                <div class="day-card">
+                    <div class="day-header">
+                        <span class="day-name">Friday</span>
+                        <span class="day-area">Overflow & Hotspots</span>
+                    </div>
+                    <div class="day-streets">
+                        <div class="day-street">High-priority streets flagged by reports</div>
+                        <div class="day-street">Missed collections from earlier in the week</div>
+                        <div class="day-street">Fly-tip clearance as required</div>
+                    </div>
+                </div>
+            </div>
 
-<div class="risk-card medium">
-    🟠 Selly Oak
-    <span>62 reports this week</span>
-</div>
+            <!-- Report-driven priorities -->
+            <div class="routes-col">
+                <h2 style="color:#2ecc71; padding: 0 4px 10px;">Report Activity</h2>
 
-<div class="risk-card low">
-    🟡 Edgbaston
-    <span>31 reports this week</span>
-</div>
+                <% if (areaSummary.length === 0) { %>
+                    <p style="color:#bbb;">No reports yet — priorities will appear here as residents submit reports.</p>
+                <% } else { %>
 
-</main>
+                    <div class="suggestion-box">
+                        <h3>Suggested Priority Changes</h3>
+                        <% areaSummary.slice(0, 3).forEach((area, i) => { %>
+                        <div class="suggestion-item">
+                            <%= i === 0 ? '🔴' : i === 1 ? '🟠' : '🟡' %>
+                            <strong><%= area.location %></strong> —
+                            <%= area.count %> report<%= area.count !== 1 ? 's' : '' %>,
+                            consider <%= i === 0 ? 'adding an extra collection this week' : i === 1 ? 'moving to earlier in the week' : 'monitoring closely' %>
+                        </div>
+                        <% }) %>
+                    </div>
 
-<footer>
-    © 2026 EcoWaste | Council Portal
-</footer>
+                    <h3 style="color:#bbb; font-size:14px; margin: 4px 0 10px;">All Areas by Report Volume</h3>
+                    <% areaSummary.forEach(area => { %>
+                    <div class="risk-card <%= area.count > 3 ? 'high' : area.count > 1 ? 'medium' : 'low' %>">
+                        <span><%= area.location %></span>
+                        <span><%= area.count %> report<%= area.count !== 1 ? 's' : '' %></span>
+                    </div>
+                    <% }) %>
 
+                <% } %>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer>
+        <p>© 2026 EcoWaste App | Cleaner Streets. Smarter Collections.</p>
+    </footer>
+
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script>function googleTranslateElementInit() { new google.translate.TranslateElement({ pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE }, 'google_translate_element'); }</script>
 </body>
 </html>

@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      window.location.href = "/home";
+      window.location.href = "/index";
 
     } catch (e) {
       showMessage("Could not complete the request. Please try again.");

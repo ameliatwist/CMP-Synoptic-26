@@ -3,85 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoWaste App</title>
-    <link rel="stylesheet" href="/static/styles/style.css">
-    <script src="/static/js/login.js"></script>
+    <title>EcoWaste | Login</title>
+    <script src="/static/js/settings.js"></script><link rel="stylesheet" href="/static/styles/style.css">
 </head>
 <body>
 
-      <!-- Header -->
     <header>
-        <div>
-            <span class="recycle"></span>
-         <a href="/index" class="logo">
-        ♻ EcoWaste
-         
-    </a>
-    </div>
-
-        <a href="/council-login" class="staff-login">Council Login</a>
+        <a href="/login" class="logo">♻ EcoWaste</a>
+        <nav></nav>
+        <div class="header-right">
+            <div id="google_translate_element"></div>
+        </div>
     </header>
 
-    <!-- Main Content -->
     <main>
 
-        <section class="hero">
+        <section class="hero-text">
             <h1>Report Waste. Earn Rewards.</h1>
             <p>Help keep Birmingham cleaner by reporting overflowing bins and waste hotspots.</p>
         </section>
 
         <section class="signup-container">
-
             <div class="signup-card">
-
                 <h2>Login</h2>
-
                 <form id="login-form">
                     <div id="messageBox" class="message-box"></div>
 
-                    <label>Email</label>
-                    <input type="email" placeholder="Enter your email" id="loginIdentifier">
+                    <label>Email or Username</label>
+                    <input type="text" placeholder="Enter your email or username" id="loginIdentifier">
 
                     <label>Password</label>
-                    <input type="password" placeholder="Enter your password" name="password" id="loginPassword">
+                    <input type="password" placeholder="Enter your password" id="loginPassword">
 
                     <button type="submit">Login</button>
-
                 </form>
 
-            <p class="login-text">
-                    Don't have an account?
-                    <a href="/create">Create Account</a>
+                <p class="login-text">
+                    Don't have an account? <a href="/create">Create Account</a>
                 </p>
 
             </div>
-
         </section>
 
-        <!-- Features -->
         <section class="features">
-
             <div class="feature-card">
                 <h3>🟢 Report Full Bins</h3>
                 <p>Quickly report household and street bins.</p>
             </div>
-
             <div class="feature-card">
                 <h3>🔵 Track Issues</h3>
                 <p>Help identify waste hotspots in your area.</p>
             </div>
-
             <div class="feature-card">
                 <h3>🏆 Earn Rewards</h3>
                 <p>Gain points for helping your community.</p>
             </div>
-
         </section>
 
     </main>
-    <footer>
-    <p>© 2026 WasteApp | Cleaner Streets. Smarter Collections.</p>
-</footer>
 
+    <footer>
+        <p>© 2026 EcoWaste App | Cleaner Streets. Smarter Collections.</p>
+    </footer>
+
+    <script src="/static/js/login.js"></script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script>function googleTranslateElementInit() { new google.translate.TranslateElement({ pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE }, 'google_translate_element'); }</script>
 </body>
 </html>

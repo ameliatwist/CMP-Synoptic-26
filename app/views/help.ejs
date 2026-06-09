@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoWaste | Help</title>
+    <script src="/static/js/settings.js"></script><link rel="stylesheet" href="/static/styles/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <a href="/index" class="logo">♻ EcoWaste</a>
+        <nav>
+            <a href="/index">Home</a>
+            <a href="/profile">Profile</a>
+            <a href="/help" class="active">Help</a>
+        </nav>
+        <div class="header-right">
+            <div id="google_translate_element"></div>
+            <a href="/logout" class="staff-login">Logout</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="profile-wrap">
+
+            <h1 style="color:#2ecc71; margin: 0 0 16px;">Help Centre</h1>
+
+            <div style="display:flex; gap:14px; flex-wrap:wrap; align-items:flex-start;">
+
+                <!-- Issue report form -->
+                <div class="card" style="flex:2; min-width:280px;">
+                    <h2 style="color:#2ecc71; margin:0 0 14px;">Report a Website Issue</h2>
+                    <form id="help-form">
+                        <div id="helpMsg" class="message-box"></div>
+
+                        <label>Issue Title</label>
+                        <input type="text" id="issueTitle" placeholder="e.g. Report page not loading">
+
+                        <label>Page Affected</label>
+                        <select id="pageAffected">
+                            <option>Home / Report Form</option>
+                            <option>Profile & Rewards</option>
+                            <option>Login / Create Account</option>
+                            <option>Council Dashboard</option>
+                            <option>Collection Routes</option>
+                            <option>Other</option>
+                        </select>
+
+                        <label>Description</label>
+                        <textarea id="issueDescription" rows="5" placeholder="Describe the issue in as much detail as possible…" style="width:100%; box-sizing:border-box; margin-top:5px;"></textarea>
+
+                        <button type="submit" style="width:100%; margin-top:14px;">Submit Issue</button>
+                    </form>
+                </div>
+
+                <!-- Accessibility settings -->
+                <div class="card" style="flex:1; min-width:220px;">
+                    <h2 style="color:#2ecc71; margin:0 0 14px;">Accessibility</h2>
+                    <p style="color:#bbb; font-size:13px; margin:0 0 16px;">Adjust settings to improve readability. Preferences are saved in your browser.</p>
+
+                    <div class="toggle-row">
+                        <span>Large Text</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="textToggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="toggle-row">
+                        <span>Light Mode</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="modeToggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <div style="margin-top:20px; padding-top:16px; border-top:1px solid #1e3a5f;">
+                        <h3 style="color:#2ecc71; margin:0 0 10px; font-size:14px;">Contact Us</h3>
+                        <p style="color:#bbb; font-size:13px; margin:0 0 12px;">For other queries reach us on:</p>
+                        <div style="display:flex; gap:14px; font-size:22px;">
+                            <a href="https://facebook.com" target="_blank" style="color:#3498db;"><i class="fa-brands fa-facebook"></i></a>
+                            <a href="https://twitter.com" target="_blank" style="color:#3498db;"><i class="fa-brands fa-x-twitter"></i></a>
+                            <a href="https://instagram.com" target="_blank" style="color:#3498db;"><i class="fa-brands fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2026 EcoWaste App | Cleaner Streets. Smarter Collections.</p>
+    </footer>
+
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script>function googleTranslateElementInit() { new google.translate.TranslateElement({ pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE }, 'google_translate_element'); }</script>
+    <script>
+        // Issue form — client-side only for now
+        document.getElementById('help-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const title = document.getElementById('issueTitle').value.trim();
+            const desc  = document.getElementById('issueDescription').value.trim();
+            const msg   = document.getElementById('helpMsg');
+            if (!title || !desc) {
+                msg.textContent = 'Please fill in both the title and description.';
+                msg.className = 'message-box show error';
+                return;
+            }
+            msg.textContent = 'Thank you — your issue has been noted.';
+            msg.className = 'message-box show success';
+            e.target.reset();
+        });
+
+        // Accessibility toggles — persist to localStorage
+        const textToggle = document.getElementById('textToggle');
+        const modeToggle = document.getElementById('modeToggle');
+
+        textToggle.checked = localStorage.getItem('largeText') === 'true';
+        modeToggle.checked = localStorage.getItem('lightMode') === 'true';
+
+        textToggle.addEventListener('change', () => {
+            localStorage.setItem('largeText', textToggle.checked);
+            if (textToggle.checked) {
+                document.documentElement.classList.add('large-text');
+            } else {
+                document.documentElement.classList.remove('large-text');
+            }
+        });
+
+        modeToggle.addEventListener('change', () => {
+            localStorage.setItem('lightMode', modeToggle.checked);
+            if (modeToggle.checked) {
+                document.documentElement.classList.add('light-mode');
+            } else {
+                document.documentElement.classList.remove('light-mode');
+            }
+        });
+    </script>
+</body>
+</html>

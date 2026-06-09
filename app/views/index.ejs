@@ -3,74 +3,232 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoWaste App</title>
-    <link rel="stylesheet" href="/static/styles/style.css">
+    <title>EcoWaste | Home</title>
+    <script src="/static/js/settings.js"></script><link rel="stylesheet" href="/static/styles/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 </head>
-
 <body>
 
-    <!-- HEADER -->
     <header>
-        <a href="index.ejs" class="logo">
-        ♻ EcoWaste
-    </a>
-    <nav>
-            <a href="index.ejs" class="active">Home</a>
-            <!-- <a href="council-dashboard.html">Dashboard</a> --- replace with user dashboard --- -->
-            <a href="council-routes.ejs">Routes and Schedule</a>
-           <a href="rewards.ejs">Rewards</a>
-</nav>
-        
-        <a href="login.ejs" class="staff-login"> Login</a>
+        <a href="/index" class="logo">♻ EcoWaste</a>
+        <nav>
+            <a href="/index" class="active">Home</a>
+            <a href="/profile">Profile</a>
+            <a href="/help">Help</a>
+        </nav>
+        <div class="header-right">
+            <div id="google_translate_element"></div>
+            <a href="/logout" class="staff-login">Logout</a>
+        </div>
     </header>
 
-  <main>
+    <main>
 
-    <section class="hero">
-        <div class="about-card">
-            <h2>What is EcoWaste App?</h2>
 
-            <p>
-                EcoWaste App helps residents report overflowing bins,
-                illegal dumping, and waste hotspots across Birmingham.
-            </p>
+        <!-- Report form: map left, fields right -->
+        <div class="report-form-card">
+            <h2>Submit a Report</h2>
+            <div id="reportMsg" class="message-box"></div>
 
-            <p>
-                Reports are sent directly to the council, helping
-                improve waste collection and keep streets cleaner.
-            </p>
+            <div class="report-layout">
 
-            <p>
-                Users can earn points and rewards for contributing
-                to a cleaner community.
-            </p>
+                <!-- Left: map -->
+                <div class="report-map-col">
+                    <label>Pin on map <span style="color:var(--text-faint);"></span></label>
+                    <div id="pick-map" style="height:340px; margin-top:5px;"></div>
+                    <p class="map-hint">Click to pin — fills the location field automatically</p>
+                    <input type="hidden" id="latitude" value="">
+                    <input type="hidden" id="longitude" value="">
+                </div>
+
+                <!-- Right: form fields -->
+                <div class="report-fields-col">
+
+                    <label>Report type</label>
+                    <div class="report-type-selector">
+                        <div class="type-tile selected" data-type="household">Household Bin</div>
+                        <div class="type-tile" data-type="street">Street Bin</div>
+                        <div class="type-tile" data-type="missed_collection">Missed Collection</div>
+                    </div>
+                    <input type="hidden" id="report_type" value="household">
+
+                    <div id="fill-level-section">
+                    <label>How full is it?</label>
+                    <div class="bin-level-selector">
+                        <div class="bin-tile" data-level="empty">
+                            <span class="bin-dot empty"></span><small>Empty</small>
+                        </div>
+                        <div class="bin-tile" data-level="barely_full">
+                            <span class="bin-dot barely_full"></span><small>Barely Full</small>
+                        </div>
+                        <div class="bin-tile" data-level="half_full">
+                            <span class="bin-dot half_full"></span><small>Half Full</small>
+                        </div>
+                        <div class="bin-tile" data-level="almost_full">
+                            <span class="bin-dot almost_full"></span><small>Almost Full</small>
+                        </div>
+                        <div class="bin-tile" data-level="full">
+                            <span class="bin-dot full"></span><small>Full</small>
+                        </div>
+                        <div class="bin-tile" data-level="overflowing">
+                            <span class="bin-dot overflowing"></span><small>Overflowing</small>
+                        </div>
+                    </div>
+                    <input type="hidden" id="bin_level" value="">
+                    </div><!-- end fill-level-section -->
+
+                    <label>Location</label>
+                    <input type="text" id="location" placeholder="e.g. 12 Oak Street, Selly Oak">
+
+                    <label>Extra details <span style="color:var(--text-faint);">(optional)</span></label>
+                    <textarea id="description" rows="3" placeholder="Anything else the council should know…" style="width:100%; box-sizing:border-box; margin-top:5px;"></textarea>
+
+                    <button id="submitReport" style="width:100%; margin-top:20px;">Submit Report</button>
+
+                </div>
+
+            </div>
         </div>
 
-        <div class="reward-card">
-            <div class="bin-icon">🗑️</div>
+        <!-- Recent reports -->
+        <section class="user-reports">
+            <h2>Your Reports</h2>
+            <% if (reports.length === 0) { %>
+                <p style="color:var(--text-muted);">No reports yet — submit your first one above.</p>
+            <% } else { %>
+                <% const levelLabels = { empty:'Empty', barely_full:'Barely Full', half_full:'Half Full', almost_full:'Almost Full', full:'Full', overflowing:'Overflowing' }; %>
+                <% reports.forEach(r => { %>
+                <div class="user-report-item">
+                    <div>
+                        <strong style="color:var(--text);"><%= r.location %></strong>
+                        <div class="report-meta">
+                            <% const typeLabel = r.report_type === 'household' ? 'Household Bin' : r.report_type === 'missed_collection' ? 'Missed Collection' : 'Street Bin'; %>
+                            <%= typeLabel %>
+                            <% if (r.bin_level) { %>
+                                &nbsp;&middot;&nbsp;<span class="bin-dot <%= r.bin_level %>" style="display:inline-block; width:10px; height:10px; vertical-align:middle; margin-bottom:1px;"></span>
+                                <%= levelLabels[r.bin_level] || r.bin_level %>
+                            <% } %>
+                        </div>
+                        <% if (r.description) { %><div class="report-meta"><%= r.description %></div><% } %>
+                    </div>
+                    <span class="status-badge <%= r.status %>"><%= r.status %></span>
+                </div>
+                <% }) %>
+            <% } %>
+        </section>
 
-            <h2>Earn Rewards</h2>
+    </main>
 
-            <p>
-                Report waste issues and collect points for helping
-                your community.
-            </p>
-
-            <button onclick="location.href='login.ejs'">Start Earning</button>
-        </div>
-    </section>
-
-    <section class="action-buttons">
-        <button>Report Overflowing Bin</button>
-        <button>View Waste Hotspots</button>
-    </section>
-
-</main>
-
-    <!-- FOOTER -->
     <footer>
-        <p>© 2026 EcoWaste App | Built for a cleaner environment</p>
+        <p>© 2026 EcoWaste App | Cleaner Streets. Smarter Collections.</p>
     </footer>
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script>function googleTranslateElementInit() { new google.translate.TranslateElement({ pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE }, 'google_translate_element'); }</script>
+    <script>
+        // Pick map — default to Ladywood, Birmingham
+        const pickMap = L.map('pick-map').setView([52.4854, -1.9163], 14);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(pickMap);
+        setTimeout(() => pickMap.invalidateSize(), 100);
+        let marker;
+        pickMap.on('click', async function (e) {
+            const lat = e.latlng.lat.toFixed(6);
+            const lng = e.latlng.lng.toFixed(6);
+            document.getElementById('latitude').value = lat;
+            document.getElementById('longitude').value = lng;
+            if (marker) marker.remove();
+            marker = L.marker(e.latlng).addTo(pickMap);
+
+            // Reverse geocode via Nominatim and fill the location text box
+            try {
+                const resp = await fetch(
+                    `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`,
+                    { headers: { 'Accept-Language': 'en' } }
+                );
+                const data = await resp.json();
+                if (data && data.display_name) {
+                    // Use a concise form: house number + road + suburb/city
+                    const a = data.address || {};
+                    const parts = [
+                        a.house_number,
+                        a.road,
+                        a.suburb || a.quarter || a.neighbourhood || a.city_district,
+                        a.city || a.town || a.village
+                    ].filter(Boolean);
+                    document.getElementById('location').value = parts.join(', ') || data.display_name;
+                }
+            } catch (_) {
+                // Nominatim failed — lat/lng still captured, user can type manually
+            }
+        });
+
+        // Bin level tiles
+        document.querySelectorAll('.bin-tile').forEach(tile => {
+            tile.addEventListener('click', () => {
+                document.querySelectorAll('.bin-tile').forEach(t => t.classList.remove('selected'));
+                tile.classList.add('selected');
+                document.getElementById('bin_level').value = tile.dataset.level;
+            });
+        });
+
+        // Report type tiles
+        const fillSection = document.getElementById('fill-level-section');
+        document.querySelectorAll('.type-tile').forEach(tile => {
+            tile.addEventListener('click', () => {
+                document.querySelectorAll('.type-tile').forEach(t => t.classList.remove('selected'));
+                tile.classList.add('selected');
+                document.getElementById('report_type').value = tile.dataset.type;
+                // Hide fill level for missed collections
+                if (tile.dataset.type === 'missed_collection') {
+                    fillSection.style.display = 'none';
+                    document.getElementById('bin_level').value = '';
+                } else {
+                    fillSection.style.display = 'block';
+                }
+            });
+        });
+
+        // Submit
+        document.getElementById('submitReport').addEventListener('click', async () => {
+            const msgBox = document.getElementById('reportMsg');
+            const locationVal = document.getElementById('location').value.trim();
+
+            if (!locationVal) {
+                msgBox.textContent = 'Please enter a location.';
+                msgBox.className = 'message-box show error';
+                return;
+            }
+
+            try {
+                const res = await fetch('/index', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        location: locationVal,
+                        bin_level: document.getElementById('bin_level').value,
+                        report_type: document.getElementById('report_type').value,
+                        latitude: document.getElementById('latitude').value,
+                        longitude: document.getElementById('longitude').value,
+                        description: document.getElementById('description').value.trim()
+                    })
+                });
+                const data = await res.json();
+                if (!res.ok) {
+                    msgBox.textContent = data.message || 'Error submitting report.';
+                    msgBox.className = 'message-box show error';
+                } else {
+                    msgBox.textContent = data.message;
+                    msgBox.className = 'message-box show success';
+                    setTimeout(() => window.location.reload(), 1200);
+                }
+            } catch (e) {
+                msgBox.textContent = 'Could not reach the server. Please try again.';
+                msgBox.className = 'message-box show error';
+            }
+        });
+    </script>
 </body>
 </html>

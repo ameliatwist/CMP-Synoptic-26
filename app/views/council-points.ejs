@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoWaste | User Points</title>
+    <script src="/static/js/settings.js"></script><link rel="stylesheet" href="/static/styles/style.css">
+</head>
+<body>
+
+    <header>
+        <a href="/council-dashboard" class="logo">♻ EcoWaste</a>
+        <nav>
+            <a href="/council-dashboard">Dashboard</a>
+            <a href="/council-routes">Routes</a>
+            <a href="/council-points" class="active">Points</a>
+        </nav>
+        <div class="header-right">
+            <div id="google_translate_element"></div>
+            <a href="/logout" class="staff-login">Logout</a>
+        </div>
+    </header>
+
+    <main>
+
+        <section class="title">
+            <h1>👥 User Points Leaderboard</h1>
+        </section>
+
+        <div class="points-table-wrap">
+            <% if (users.length === 0) { %>
+                <p style="color:#bbb; text-align:center;">No users registered yet.</p>
+            <% } else { %>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Username</th>
+                        <th>Full Name</th>
+                        <th>🏆 Points</th>
+                        <th>Level</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% users.forEach((u, i) => { %>
+                    <tr>
+                        <td><%= i + 1 %></td>
+                        <td><%= u.username %></td>
+                        <td><%= u.fullname %></td>
+                        <td><strong style="color:#2ecc71;"><%= u.points %></strong></td>
+                        <td>
+                            <% if (u.points >= 2000) { %>🏅 Eco Hero
+                            <% } else if (u.points >= 1000) { %>🌱 Green Champion
+                            <% } else { %>🌿 Eco Starter<% } %>
+                        </td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+            <% } %>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>© 2026 EcoWaste App | Cleaner Streets. Smarter Collections.</p>
+    </footer>
+
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script>function googleTranslateElementInit() { new google.translate.TranslateElement({ pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE }, 'google_translate_element'); }</script>
+</body>
+</html>

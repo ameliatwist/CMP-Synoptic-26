@@ -1,107 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Council Dashboard</title>
-<link rel="stylesheet" href="/static/styles/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoWaste | Council Dashboard</title>
+    <script src="/static/js/settings.js"></script><link rel="stylesheet" href="/static/styles/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 </head>
-
 <body>
 
-<header>
-    <a href="index.ejs" class="logo">
-        ♻ EcoWaste
-    </a>
-
-    <nav>
-          <a href="index.ejs">Home</a>
-            <a href="council-dashboard.ejs" class="active">Dashboard</a>
-            <a href="council-routes.ejs">Routes and Schedule</a>
-            <a href="rewards.ejs">Rewards</a>
+    <header>
+        <a href="/council-dashboard" class="logo">♻ EcoWaste</a>
+        <nav>
+            <a href="/council-dashboard" class="active">Dashboard</a>
+            <a href="/council-routes">Routes</a>
+            <a href="/council-points">Points</a>
         </nav>
-
-    <div class="council-title">
-        Council Staff Portal
-    </div>
-</header>
-
-<main>
-
-    <section class="dashboard-header">
-        <h1>Council Dashboard</h1>
-        <p>Monitor waste reports and identify collection hotspots.</p>
-    </section>
-
-    <section class="dashboard-grid">
-
-        <div class="map-card">
-            <h2>Waste Hotspot Map</h2>
-
-            <div class="map-placeholder">
-                Map Display Area
-            </div>
+        <div class="header-right">
+            <div id="google_translate_element"></div>
+            <a href="/logout" class="staff-login">Logout</a>
         </div>
+    </header>
 
-        <section class="stats-section">
+    <main>
 
-    <h2>Waste Statistics</h2>
+        <section class="dashboard-header">
+            <h1>Council Dashboard</h1>
+            <p>Monitor waste reports and identify collection hotspots.</p>
+        </section>
 
-    <div class="stats-grid">
+        <!-- Top row: map + stats -->
+        <div class="dash-top">
 
-        <div class="stat-card">
-            <h3>320</h3>
-            <p>Total Reports</p>
-        </div>
-
-        <div class="stat-card">
-            <h3>275</h3>
-            <p>Approved Reports</p>
-        </div>
-
-        <div class="stat-card">
-            <h3>45</h3>
-            <p>Pending Reports</p>
-        </div>
-
-        <div class="stat-card">
-            <h3>5</h3>
-            <p>High Risk Areas</p>
-        </div>
-
-    </div>
-
-</section>
-
-        <div class="report-card">
-            <h2>Recent Reports</h2>
-
-            <div class="report">
-                Overflowing Bin - City Centre
+            <div class="dash-map-col">
+                <h2 style="color:#2ecc71; margin:0 0 10px;">Waste Hotspot Map</h2>
+                <div class="map-filters">
+                    <button class="map-filter-btn active" data-filter="all">All</button>
+                    <button class="map-filter-btn" data-filter="pending">Pending</button>
+                    <button class="map-filter-btn" data-filter="overflowing">Overflowing</button>
+                    <button class="map-filter-btn" data-filter="street">Street Bins</button>
+                    <button class="map-filter-btn" data-filter="household">Household</button>
+                    <button class="map-filter-btn" data-filter="missed_collection">Missed Collections</button>
+                </div>
+                <div id="map" style="height:380px; margin-top:10px;"></div>
             </div>
 
-            <div class="report">
-                Full Bin - Selly Oak
-            </div>
-
-            <div class="report">
-                Overflowing Bin - New Street
-            </div>
-
-            <div class="buttons">
-                <button onclick="approveReport()">Approve</button>
-                <button onclick="rejectReport()">Reject</button>
+            <div class="dash-stats-col">
+                <div class="dash-stat"><h3><%= stats.total %></h3><p>Total Reports</p></div>
+                <div class="dash-stat"><h3><%= stats.pending %></h3><p>Pending</p></div>
+                <div class="dash-stat"><h3><%= stats.approved %></h3><p>Approved</p></div>
+                <div class="dash-stat"><h3><%= stats.collected %></h3><p>Collected</p></div>
+                <div class="dash-stat"><h3><%= stats.rejected %></h3><p>Rejected</p></div>
             </div>
 
         </div>
 
-    </section>
+        <!-- Bottom row: reports full width -->
+        <div class="dash-reports">
+            <h2 style="color:#2ecc71; margin:0 0 12px;">Recent Reports</h2>
+            <% if (reports.length === 0) { %>
+                <p style="color:#bbb;">No reports yet.</p>
+            <% } else { %>
+                <%
+                const levelLabels = { empty:'Empty', barely_full:'Barely Full', half_full:'Half Full', almost_full:'Almost Full', full:'Full', overflowing:'Overflowing' };
+                const typeLabels  = { household:'Household Bin', street:'Street Bin', missed_collection:'Missed Collection' };
+                %>
+                <div class="reports-grid">
+                <% reports.forEach(r => { %>
+                <div class="report">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
+                        <strong style="color:#fff;"><%= r.location %></strong>
+                        <span class="type-badge" style="white-space:nowrap;"><%= typeLabels[r.report_type] || r.report_type %></span>
+                    </div>
+                    <div style="font-size:12px; color:#aaa; margin-top:4px;">
+                        By <strong style="color:#ccc;"><%= r.username %></strong>
+                        <% if (r.bin_level) { %>
+                            &nbsp;&middot;&nbsp;<span class="bin-dot <%= r.bin_level %>" style="display:inline-block;width:9px;height:9px;vertical-align:middle;"></span>
+                            <%= levelLabels[r.bin_level] %>
+                        <% } %>
+                    </div>
+                    <% if (r.description) { %>
+                    <div style="font-size:12px; color:#bbb; margin-top:3px; font-style:italic;"><%= r.description %></div>
+                    <% } %>
+                    <div style="display:flex; gap:6px; margin-top:8px; align-items:center; flex-wrap:wrap;">
+                        <span class="status-badge <%= r.status %>"><%= r.status %></span>
+                        <form method="POST" action="/council-reports/update" style="margin:0;">
+                            <input type="hidden" name="report_id" value="<%= r.id %>">
+                            <input type="hidden" name="status" value="approved">
+                            <button class="approve" style="padding:4px 10px; font-size:12px; margin-top:0;">Approve</button>
+                        </form>
+                        <form method="POST" action="/council-reports/update" style="margin:0;">
+                            <input type="hidden" name="report_id" value="<%= r.id %>">
+                            <input type="hidden" name="status" value="collected">
+                            <button style="padding:4px 10px; font-size:12px; margin-top:0; background:#3498db; color:#fff;">Collected</button>
+                        </form>
+                        <form method="POST" action="/council-reports/update" style="margin:0;">
+                            <input type="hidden" name="report_id" value="<%= r.id %>">
+                            <input type="hidden" name="status" value="rejected">
+                            <button class="reject" style="padding:4px 10px; font-size:12px; margin-top:0;">Reject</button>
+                        </form>
+                    </div>
+                </div>
+                <% }) %>
+                </div>
+            <% } %>
+        </div>
 
-</main>
+    </main>
 
-<footer>
-    © 2026 EcoWaste | Council Portal
-</footer>
+    <footer>
+        <p>© 2026 EcoWaste App | Cleaner Streets. Smarter Collections.</p>
+    </footer>
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script>function googleTranslateElementInit() { new google.translate.TranslateElement({ pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE }, 'google_translate_element'); }</script>
+    <script>
+        const map = L.map('map').setView([52.4854, -1.9163], 14);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+        setTimeout(() => map.invalidateSize(), 100);
+
+        const allReports = <%- reportsJson %>;
+        let heatLayer = null;
+        let markerLayer = L.layerGroup().addTo(map);
+
+        function renderMap(filter) {
+            let filtered = allReports.filter(r => r.latitude && r.longitude);
+            if (filter === 'pending')            filtered = filtered.filter(r => r.status === 'pending');
+            else if (filter === 'overflowing')   filtered = filtered.filter(r => r.bin_level === 'overflowing');
+            else if (filter === 'street')        filtered = filtered.filter(r => r.report_type === 'street');
+            else if (filter === 'household')     filtered = filtered.filter(r => r.report_type === 'household');
+            else if (filter === 'missed_collection') filtered = filtered.filter(r => r.report_type === 'missed_collection');
+
+            if (heatLayer) map.removeLayer(heatLayer);
+            const heatData = filtered.map(r => [parseFloat(r.latitude), parseFloat(r.longitude), 1.0]);
+            if (heatData.length > 0) {
+                heatLayer = L.heatLayer(heatData, { radius: 35, blur: 20, maxZoom: 15 });
+                map.addLayer(heatLayer);
+            }
+
+            markerLayer.clearLayers();
+            const colours = { pending:'#f1c40f', approved:'#2ecc71', collected:'#3498db', rejected:'#e74c3c' };
+            filtered.forEach(r => {
+                L.circleMarker([parseFloat(r.latitude), parseFloat(r.longitude)], {
+                    radius: 6,
+                    color: colours[r.status] || '#bbb',
+                    fillColor: colours[r.status] || '#bbb',
+                    fillOpacity: 0.85,
+                    weight: 1
+                }).bindPopup(
+                    `<b>${r.location}</b><br>` +
+                    `Type: ${r.report_type === 'missed_collection' ? 'Missed Collection' : r.report_type === 'household' ? 'Household Bin' : 'Street Bin'}<br>` +
+                    `Level: ${r.bin_level || '—'}<br>` +
+                    `By: ${r.username}<br>` +
+                    `Status: ${r.status}`
+                ).addTo(markerLayer);
+            });
+        }
+
+        renderMap('all');
+
+        document.querySelectorAll('.map-filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.map-filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderMap(btn.dataset.filter);
+            });
+        });
+    </script>
 </body>
 </html>

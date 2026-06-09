@@ -28,8 +28,8 @@ router.post("/", async function (req, res) {
   }
 
   try {
-    const userResult = await global.jobs.push({
-      type: global.jobs.TYPE_CREATE_USER,
+    const userResult = await global.jobs.data.push({
+      type: global.jobs.data.TYPE_CREATE_USER,
       fullname,
       username,
       email,
@@ -39,6 +39,13 @@ router.post("/", async function (req, res) {
     if (userResult.err) {
       return res.status(400).json({ message: userResult.err });
     }
+
+    const user = userResult.result;
+    req.session.user = {
+      id: user.id,
+      username: user.username,
+      fullname: user.fullname
+    };
 
     return res.status(201).json({ message: "Account created successfully." });
 
