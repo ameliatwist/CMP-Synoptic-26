@@ -377,7 +377,7 @@ button:disabled { background: var(--bg-inset); color: var(--text-faint); cursor:
 .report-layout { display: flex; gap: 28px; align-items: flex-start; }
 .report-fields-col { flex: 1; min-width: 0; display: flex; flex-direction: column; }
 .report-map-col { flex: 1; min-width: 0; }
-.map-hint { font-size: 12px; color: var(--text-faint); margin: 6px 0 0; text-align: center; }
+.map-hint { font-size: 15px; color: var(--text-faint); margin: 6px 0 0; text-align: center; }
 
 .bin-level-selector { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0 16px; }
 
@@ -523,8 +523,10 @@ tbody tr:hover { background: var(--bg-hover); }
 .recycling-tips { text-align: center; padding: 16px 20px 20px; }
 .recycling-tips h2 { color: var(--green); margin-bottom: 0; }
 .tip-grid { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 12px; }
-.tip-tile { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; min-width: 80px; text-align: center; font-size: 28px; }
+.tip-tile {background: var(--bg-card);border: 1px solid var(--border);border-radius: 10px;padding: 14px 16px;min-width: 80px;text-align: center;font-size: 28px;transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;cursor: pointer;}
 .tip-tile small { display: block; font-size: 11px; color: var(--text-faint); margin-top: 6px; }
+.tip-tile:hover {transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); border-color: var(--green); }
+.tip-tile:active { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); }
 
 /* MAP*/
 #map, #pick-map { border-radius: 8px; border: 1px solid var(--border); }
