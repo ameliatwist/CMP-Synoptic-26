@@ -1,3 +1,4 @@
+// Test suite for the index route, verifying that the route correctly retrieves user points and reports, validates input for report submission, interacts with the data layer to submit reports, and handles errors appropriately
 const request = require("supertest");
 const express = require("express");
 
@@ -28,7 +29,7 @@ describe("Index route", () => {
 
         app.use("/", indexRouter);
     });
-
+// Verify that the route correctly retrieves the user points and reports from the data layer and renders the index page with the expected data
     test("GET / renders index with user points and reports", async () => {
         global.jobs = {
             data: {
@@ -77,7 +78,7 @@ describe("Index route", () => {
         expect(response.status).toBe(400);
         expect(response.body.message).toBe("Please enter a location.");
     });
-
+// Verify that the route correctly validates the input fields for report submission and returns appropriate error messages for invalid input
     test("POST / submits report successfully", async () => {
         global.jobs = {
             data: {

@@ -1,3 +1,4 @@
+// Route for updating the status of a report from the council dashboard
 const express = require('express');
 const router = express.Router();
 const jobs = () => global.jobs.data;

@@ -1,3 +1,4 @@
+// Route for the main dashboard page, showing user points and reports, and allowing users to submit new reports
 const express = require('express');
 const router = express.Router();
 const jobs = () => global.jobs.data;
@@ -16,7 +17,7 @@ router.get('/', async (req, res) => {
         reports: reportsResult.result || []
     });
 });
-
+// Handles the form submission for creating a new report, including validation and interaction with the data layer
 router.post('/', async (req, res) => {
     const user = req.session.user;
     const { description, location, bin_level, report_type, latitude, longitude } = req.body;

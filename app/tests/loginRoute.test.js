@@ -1,3 +1,4 @@
+// Test suite for the login route, verifying that the route correctly validates input, interacts with the data layer to authenticate users, sets session variables, and returns appropriate responses for different scenarios (e.g. successful login, incorrect credentials, server errors)
 const express = require("express");
 const session = require("express-session");
 const request = require("supertest");

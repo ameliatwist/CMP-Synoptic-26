@@ -1,3 +1,4 @@
+// Route for handling user login, including form validation and interaction with the data layer to authenticate users and manage sessions
 const express = require('express');
 const router = express.Router();
 
@@ -12,7 +13,7 @@ router.post('/', async function (req, res) {
   if (!login || !password) {
     return res.status(400).json({ message: 'Please enter your username/email and password.' });
   }
-
+// Interact with the data layer to authenticate the user and manage sessions, handling any errors that may occur
   try {
     const result = await global.jobs.data.push({
       type: global.jobs.data.TYPE_LOGIN_ANY,

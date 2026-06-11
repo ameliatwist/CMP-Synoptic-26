@@ -1,3 +1,4 @@
+// Test suite for the council routes page, verifying that the area summary is correctly calculated and rendered based on the reports data
 const request = require("supertest");
 const express = require("express");
 
@@ -43,7 +44,7 @@ describe("GET /council-routes", () => {
                 })
             }
         };
-
+// Verify that the route correctly calculates the area summary and renders the council routes page with the expected data
         const response = await request(app).get("/council-routes");
 
         expect(response.status).toBe(200);

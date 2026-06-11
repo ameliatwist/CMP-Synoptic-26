@@ -1,3 +1,4 @@
+// Route for the user profile page, showing user information and report statistics, and allowing users to view their profile details
 const express = require('express');
 const router = express.Router();
 const jobs = () => global.jobs.data;

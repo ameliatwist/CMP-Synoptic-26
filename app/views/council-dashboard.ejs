@@ -1,3 +1,4 @@
+// EJS template for the council dashboard page, which displays a map of waste report hotspots, summary statistics, and a list of recent reports with options to approve, mark as collected, or reject each report. The page also includes filters for the map to show different types of reports and their statuses.
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -111,7 +112,7 @@
     <footer>
         <p>© 2026 EcoWaste App | Cleaner Streets. Smarter Collections.</p>
     </footer>
-
+// Leaflet and heatmap scripts, plus Google Translate
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
@@ -126,7 +127,7 @@
         const allReports = <%- reportsJson %>;
         let heatLayer = null;
         let markerLayer = L.layerGroup().addTo(map);
-
+// Function to render the heatmap and markers based on the selected filter
         function renderMap(filter) {
             let filtered = allReports.filter(r => r.latitude && r.longitude);
             if (filter === 'pending')            filtered = filtered.filter(r => r.status === 'pending');

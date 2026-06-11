@@ -1,3 +1,4 @@
+// Handles the user login form submission and validation
 document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("login-form");
   const messageBox = document.getElementById("messageBox");
@@ -23,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
       showMessage("Please enter your username/email and password.");
       return;
     }
-
+// Send the data to the server
     try {
       const response = await fetch("/login", {
         method: "POST",

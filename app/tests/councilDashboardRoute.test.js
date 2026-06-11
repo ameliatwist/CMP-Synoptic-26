@@ -1,3 +1,4 @@
+// Test suite for the council dashboard route, verifying that the dashboard is rendered with the correct reports and statistics based on the data returned from the data layer
 const request = require("supertest");
 const express = require("express");
 

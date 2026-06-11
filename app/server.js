@@ -1,3 +1,4 @@
+//This file sets up an Express server for a web application that allows users to report waste-related issues and earn points for their contributions. The server handles user authentication, session management, and routing for various pages of the application, including user dashboards and council staff interfaces. It also serves static files and renders views using the EJS templating engine. The server listens on port 3000 for incoming requests.
 const express = require('express');
 const app = express();
 const path = require('path');

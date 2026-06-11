@@ -1,3 +1,4 @@
+//Route for the council dashboard page, showing report statistics and recent reports
 const express = require('express');
 const router = express.Router();
 const jobs = () => global.jobs.data;

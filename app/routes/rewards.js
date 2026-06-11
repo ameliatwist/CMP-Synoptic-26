@@ -1,3 +1,4 @@
+// Route for the rewards page, allowing users to redeem points for rewards and interact with the data layer to manage reward redemption
 const express = require('express');
 const router = express.Router();
 const jobs = () => global.jobs.data;

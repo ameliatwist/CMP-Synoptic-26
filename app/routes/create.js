@@ -1,10 +1,11 @@
+// Route for handling user account creation, including form validation and interaction with the data layer
 const express = require("express");
 const router = express.Router();
 
 router.get("/", (req, res) => {
   res.render("create");
 });
-
+// Handles the form submission for creating a new user account
 router.post("/", async function (req, res) {
   const fullname = req.body.fullname?.trim();
   const username = req.body.username?.trim();
@@ -26,7 +27,7 @@ router.post("/", async function (req, res) {
   if (!password || password.length < 8) {
     return res.status(400).json({ message: "Password must be at least 8 characters." });
   }
-
+// Interact with the data layer to create the user account and handle any errors that may occur
   try {
     const userResult = await global.jobs.data.push({
       type: global.jobs.data.TYPE_CREATE_USER,

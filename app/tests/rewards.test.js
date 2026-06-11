@@ -1,3 +1,4 @@
+// Test suite for the rewards route, verifying that the route correctly handles GET and POST requests, interacts with the data layer to redeem points, and handles errors appropriately
 const request = require("supertest");
 const express = require("express");
 
@@ -27,7 +28,7 @@ describe("Rewards route", () => {
 
         app.use("/rewards", rewardsRouter);
     });
-
+// Verify that the route correctly handles GET requests by redirecting to the profile page
     test("GET /rewards redirects to /profile", async () => {
         const response = await request(app).get("/rewards");
 

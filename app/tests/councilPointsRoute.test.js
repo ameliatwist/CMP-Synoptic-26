@@ -1,3 +1,4 @@
+// Test suite for the council points route, verifying that the council points page is rendered with the correct users and points data based on the data returned from the data layer
 const request = require("supertest");
 const express = require("express");
 
@@ -29,7 +30,7 @@ describe("GET /council-points", () => {
 
         app.use("/council-points", councilPointsRouter);
     });
-
+// Verify that the route correctly retrieves the users and points data from the data layer and renders the council points page with the expected data
     test("renders council points page with users", async () => {
         global.jobs = {
             data: {

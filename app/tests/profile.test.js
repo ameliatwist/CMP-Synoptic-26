@@ -1,3 +1,4 @@
+// Test suite for the profile route, verifying that the route correctly retrieves user profile and report stats from the data layer, renders the profile page with the expected data, and handles errors appropriately
 const request = require("supertest");
 const express = require("express");
 

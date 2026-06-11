@@ -1,3 +1,4 @@
+//Handles the user creation form submission and validation
 document.addEventListener("DOMContentLoaded", () => {
   const createForm = document.getElementById("create-form");
   const messageBox = document.getElementById("messageBox");
@@ -41,6 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    // Send the data to the server
     try {
       const response = await fetch("/create", {
         method: "POST",
